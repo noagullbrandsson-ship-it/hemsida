@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-stöd för redovisningsbyråer i Kalmar</title>
+<meta name="description" content="Praktisk hjälp att komma igång med AI på redovisningsbyrån. Kalmar med omnejd. Börja med en kostnadsfri pilot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f5f0; --paper:#ffffff; --ink:#1d2421; --muted:#5b6560;
+    --green:#1f4d3f; --green-2:#2e6b58; --line:#e3dfd5; --accent:#c9a45c;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:17px;line-height:1.6}
+  a{color:var(--green)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15;margin:0 0 .5em;color:var(--ink)}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.02em}
+  h2{font-size:clamp(1.7rem,3.2vw,2.4rem);letter-spacing:-.01em}
+  h3{font-size:1.25rem}
+  p{margin:0 0 1em}
+  .eyebrow{font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green-2);margin-bottom:.8em}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:rgba(247,245,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:Fraunces,serif;font-weight:600;font-size:1.2rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+  .logo-mark{width:30px;height:30px;border-radius:8px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:.9rem}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.95rem;font-weight:500}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{display:inline-block;padding:13px 22px;border-radius:999px;font-weight:600;font-size:.97rem;text-decoration:none;border:1.5px solid var(--green);transition:all .15s}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-primary:hover{background:var(--green-2);border-color:var(--green-2)}
+  .btn-ghost{color:var(--green);background:transparent}
+  .btn-ghost:hover{background:#fff}
+  .nav .btn{padding:9px 18px;font-size:.9rem}
+  @media (max-width:760px){.nav-links a:not(.btn){display:none}}
+
+  /* Hero */
+  .hero{padding:96px 0 80px}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:56px;align-items:center}
+  .hero p.lead{font-size:1.2rem;color:var(--muted);max-width:34em}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:0 10px 30px -18px rgba(31,77,63,.35)}
+  .stat{font-family:Fraunces,serif;font-size:3.4rem;color:var(--green);line-height:1}
+  .stat-label{color:var(--muted);margin-top:8px}
+  .source{font-size:.78rem;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr}.hero{padding:64px 0 56px}}
+
+  section{padding:80px 0}
+  .alt{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .section-head{max-width:640px;margin-bottom:44px}
+  .section-head p{color:var(--muted);font-size:1.08rem}
+
+  /* Examples */
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr}}
+  @media (max-width:520px){.grid-4{grid-template-columns:1fr}}
+  .tile{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .alt .tile{background:var(--bg)}
+  .tile .icon{width:38px;height:38px;border-radius:10px;background:#e4ece8;color:var(--green);display:grid;place-items:center;margin-bottom:14px}
+  .tile p{color:var(--muted);font-size:.95rem;margin:0}
+
+  /* Packages */
+  .pkg{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column}
+  .pkg.featured{border:2px solid var(--green);position:relative}
+  .badge{position:absolute;top:-12px;left:24px;background:var(--green);color:#fff;font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:999px}
+  .pkg .price{font-weight:600;color:var(--green);margin:-4px 0 14px}
+  .pkg ul{padding-left:0;list-style:none;margin:0 0 20px;flex:1}
+  .pkg li{padding:6px 0 6px 26px;position:relative;color:var(--muted);font-size:.96rem}
+  .pkg li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2px solid var(--green);border-bottom:2px solid var(--green);transform:rotate(-45deg)}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+  @media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.steps{grid-template-columns:1fr}}
+  .step{counter-increment:s;padding-top:20px;border-top:2px solid var(--green)}
+  .step::before{content:counter(s,decimal-leading-zero);font-family:Fraunces,serif;font-size:1.6rem;color:var(--accent);display:block;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:.96rem}
+
+  /* Privacy */
+  .privacy{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  @media (max-width:860px){.privacy{grid-template-columns:1fr}}
+  .rules{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .rules div{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .rules div:last-child{border-bottom:0}
+  .no{color:#a33a2b;font-weight:600;min-width:24px}
+  .yes{color:var(--green);font-weight:600;min-width:24px}
+
+  /* About */
+  .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center}
+  @media (max-width:860px){.about{grid-template-columns:1fr}}
+  .portrait{aspect-ratio:4/5;border-radius:var(--radius);background:linear-gradient(160deg,#dfe8e3,#c8d8cf);display:grid;place-items:center;color:var(--green);font-family:Fraunces,serif;font-size:1rem;border:1px dashed #9db5a9}
+
+  /* Contact */
+  .contact{background:var(--green);color:#fff;border-radius:22px;padding:56px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+  .contact h2{color:#fff}
+  .contact p{color:#d6e3dd}
+  .contact-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--radius);padding:24px}
+  .contact-box div{padding:8px 0}
+  .contact-box span{display:block;font-size:.8rem;color:#b9cec5;text-transform:uppercase;letter-spacing:.08em}
+  .contact-box strong{font-size:1.08rem}
+  .contact .btn-primary{background:#fff;color:var(--green);border-color:#fff}
+  @media (max-width:860px){.contact{grid-template-columns:1fr;padding:36px}}
+
+  footer{padding:36px 0;color:var(--muted);font-size:.88rem}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:24px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <!-- TODO: byt ut mot företagsnamnet -->
+    <a class="logo" href="#top"><span class="logo-mark">AI</span>AI-stöd för byråer</a>
+    <nav class="nav-links">
+      <a href="#exempel">Exempel</a>
+      <a href="#tjanster">Tjänster</a>
+      <a href="#sa-funkar-det">Så funkar det</a>
+      <a href="#om-mig">Om mig</a>
+      <a class="btn btn-primary" href="#kontakt">Boka samtal</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">För redovisningsbyråer i Kalmar med omnejd</div>
+        <h1>AI som sparar tid på byrån, utan krångel.</h1>
+        <p class="lead">Jag hjälper små redovisningsbyråer att komma igång med AI i vardagen. Praktiskt, steg för steg och med full koll på vilka kunduppgifter som aldrig ska in i AI.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#kontakt">Boka ett kostnadsfritt samtal</a>
+          <a class="btn btn-ghost" href="#sa-funkar-det">Så går en pilot till</a>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <div class="stat">1 av 3</div>
+        <div class="stat-label">redovisningsbyråer använder inte AI alls. Bland dem som gör det handlar det mest om enklare saker som att söka information och skriva text.</div>
+        <div class="source">Källa: Björn Lundén och Revisionsvärlden, enkät bland fler än 400 svenska byråer, maj 2026.</div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="exempel" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Exempel</div>
+        <h2>Var AI kan hjälpa på en byrå</h2>
+        <p>Det handlar inte om att AI ska göra bokföringen. Det handlar om allt runt omkring som tar tid.</p>
+      </div>
+      <div class="grid-4">
+        <div class="tile">
+          <div class="icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg></div>
+          <h3>Kundmejl</h3>
+          <p>Svar på vanliga frågor, påminnelser om underlag och tydliga förklaringar till kunder.</p>
+        </div>
+        <div class="tile">
+          <div class="icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg></div>
+          <h3>Sammanfattningar</h3>
+          <p>Nya regler och längre texter sammanfattade på några minuter, i stället för en timme.</p>
+        </div>
+        <div class="tile">
+          <div class="icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 11 3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
+          <h3>Checklistor</h3>
+          <p>Mallar och checklistor för bokslut, månadsrutiner och introduktion av nya kunder.</p>
+        </div>
+        <div class="tile">
+          <div class="icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Möten och anteckningar</h3>
+          <p>Strukturerade anteckningar och tydliga nästa steg efter kundmöten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tjanster">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Tjänster</div>
+        <h2>Börja litet. Fortsätt om det ger resultat.</h2>
+        <p>Ni behöver inte köpa något stort från början. Vi börjar med en pilot och mäter hur mycket tid ni faktiskt sparar.</p>
+      </div>
+      <div class="grid-3">
+        <div class="pkg featured">
+          <span class="badge">Börja här</span>
+          <h3>Pilot</h3>
+          <div class="price">Kostnadsfri för de första byråerna</div>
+          <ul>
+            <li>2–4 veckor</li>
+            <li>Vi hittar 2–3 uppgifter där AI sparar tid</li>
+            <li>Jag sätter upp det och visar hur det används</li>
+            <li>Tiden mäts före och efter</li>
+            <li>Ni får en kort rapport med resultatet</li>
+          </ul>
+          <a class="btn btn-primary" href="#kontakt">Fråga om en pilot</a>
+        </div>
+        <div class="pkg">
+          <h3>Startpaket</h3>
+          <div class="price">Pris efter samtal</div>
+          <ul>
+            <li>Workshop för hela byrån</li>
+            <li>Färdiga mallar för vanliga uppgifter</li>
+            <li>Hjälp att sätta upp verktygen</li>
+            <li>Enkel AI-policy: vad som får och inte får läggas in i AI</li>
+            <li>Kort genomgång av vad EU:s AI-förordning innebär för er</li>
+          </ul>
+          <a class="btn btn-ghost" href="#kontakt">Hör av dig</a>
+        </div>
+        <div class="pkg">
+          <h3>Löpande stöd</h3>
+          <div class="price">Fast pris per månad</div>
+          <ul>
+            <li>Uppföljning varje månad</li>
+            <li>Nya sätt att använda AI när ni är redo</li>
+            <li>Hjälp när något inte fungerar</li>
+            <li>Tips om nya verktyg som passar er</li>
+          </ul>
+          <a class="btn btn-ghost" href="#kontakt">Hör av dig</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sa-funkar-det" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Så funkar det</div>
+        <h2>Från första samtal till mätbart resultat</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Samtal</h3><p>Ett kort, kostnadsfritt samtal eller besök. Ni berättar hur ni jobbar i dag.</p></div>
+        <div class="step"><h3>Kartläggning</h3><p>Vi väljer ut de uppgifter där AI kan spara mest tid, och mäter hur lång tid de tar nu.</p></div>
+        <div class="step"><h3>Uppsättning</h3><p>Jag sätter upp verktygen och visar personalen hur de används, med era riktiga exempel.</p></div>
+        <div class="step"><h3>Resultat</h3><p>Efter några veckor mäter vi igen. Ni ser svart på vitt vad det gav.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sekretess">
+    <div class="wrap privacy">
+      <div>
+        <div class="eyebrow">Sekretess</div>
+        <h2>Kunduppgifter är inte till för AI</h2>
+        <p style="color:var(--muted)">Ni har tystnadsplikt och ansvar för era kunders uppgifter. Därför börjar allt arbete med tydliga regler för vad som får och inte får läggas in i ett AI-verktyg. Reglerna skrivs ner i en enkel policy som hela byrån kan följa.</p>
+      </div>
+      <div class="rules">
+        <div><span class="no">✕</span><span>Personnummer, namn och kontouppgifter</span></div>
+        <div><span class="no">✕</span><span>Kundernas bokföring eller lönelistor</span></div>
+        <div><span class="no">✕</span><span>Känsliga uppgifter om kunder eller anställda</span></div>
+        <div><span class="yes">✓</span><span>Mallar, generella frågor och avidentifierade exempel</span></div>
+        <div><span class="yes">✓</span><span>Regeltexter, checklistor och egna rutiner</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="om-mig" class="alt">
+    <div class="wrap about">
+      <!-- TODO: byt ut mot en riktig bild -->
+      <div class="portrait">Bild kommer</div>
+      <div>
+        <div class="eyebrow">Om mig</div>
+        <h2>Hej, jag heter Noa</h2>
+        <p>Jag bor i Kalmar och läser Ekonomiprogrammet, så jag kan grunderna i bokföring och redovisning. Jag har fördjupat mig i hur AI kan användas i vardagen på små företag.</p>
+        <p>Jag tror inte på AI-hype. Jag tror på små, konkreta förbättringar som går att mäta. Därför börjar jag alltid med en pilot, och jag finns nära om något strular.</p>
+        <a class="btn btn-ghost" href="#kontakt">Ta kontakt</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2>Nyfiken på vad AI kan göra för er byrå?</h2>
+          <p>Hör av dig för ett kort samtal eller ett besök. Det kostar ingenting, och ni bestämmer själva om ni vill gå vidare.</p>
+        </div>
+        <!-- TODO: fyll i riktiga kontaktuppgifter -->
+        <div class="contact-box">
+          <div><span>E-post</span><strong>din@epost.se</strong></div>
+          <div><span>Telefon</span><strong>070-000 00 00</strong></div>
+          <div><span>Område</span><strong>Kalmar med omnejd</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 AI-stöd för byråer · Kalmar</span>
+    <span>Inga kunduppgifter samlas in via den här sidan.</span>
+  </div>
+</footer>
+
+</body>
+</html>
